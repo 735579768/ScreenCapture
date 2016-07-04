@@ -82,6 +82,7 @@ public class MainWindow extends JFrame {
 			}
 		}
 		final IDevice[] devices = bridge.getDevices();
+//		 AdbHelper.setDevice(mChannel, mDevice);
 		JMenu fileMenu = new JMenu("选择设备");
 		JMenu functionMenu = new JMenu("功能");
 		JMenu functionZoom = new JMenu("缩放");
