@@ -45,6 +45,7 @@ public class MainWindow extends JFrame {
 
 	JLabel label;
 	public static String targetNum = null;
+	public static boolean ScreenshotIng=false;//正在截图
 	public static IDevice device = null;
 	public Thread th = null;
 	public OperateAndroid oa = null;
@@ -232,13 +233,14 @@ public class MainWindow extends JFrame {
 			public void run() {
 				ImageIcon image = null;
 				while (true) {
-
+					if(!ScreenshotIng){
 					image = new ImageIcon("no.gif");
 					image.setImage(getImageIcon(targetNum).getImage()
 							.getScaledInstance(width, height,
 									Image.SCALE_DEFAULT));
-
 					label.setIcon(image);
+//					System.out.println("tie tu:"+System.currentTimeMillis());
+					}
 				}
 			}
 		});
@@ -382,8 +384,11 @@ public class MainWindow extends JFrame {
 
 	public ImageIcon getImageIcon(String targetNum) {
 		try {
+			ScreenshotIng=true;
 			// long start = System.currentTimeMillis();
+//			System.out.println("1 tie tu:"+System.currentTimeMillis());
 			RawImage rawImage = device.getScreenshot();
+//			System.out.println("2 tie tu:"+System.currentTimeMillis());
 			// long end = System.currentTimeMillis();
 			// System.out.println("获取屏幕时间：" + (end - start) + "-毫秒");
 			BufferedImage image = new BufferedImage(rawImage.width,
@@ -397,9 +402,12 @@ public class MainWindow extends JFrame {
 					image.setRGB(x, y, value);
 				}
 			}
+			ScreenshotIng=false;
+//			System.out.println("3 tie tu:"+System.currentTimeMillis());
 			return new ImageIcon(image);
 
 		} catch (Exception e) {
+			ScreenshotIng=false;
 			e.printStackTrace();
 		}
 		return null;
